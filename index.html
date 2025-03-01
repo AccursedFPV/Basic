@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
+  <title>FPV Drone Expert - Home</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -11,20 +11,39 @@
       margin: 0;
       padding: 0;
       color: #333;
+      background-color: #f8f9fa;
     }
     
     header {
-      background-color: #4a6fa5;
+      background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
       color: white;
-      padding: 1rem;
+      padding: 2rem 0;
       text-align: center;
     }
     
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .header-content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .header-content p {
+      font-size: 1.2rem;
+      margin-top: 0;
+    }
+    
     nav {
-      background-color: #333;
-      color: white;
-      display: flex;
-      justify-content: center;
+      background-color: #222;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
     
     nav ul {
@@ -32,19 +51,22 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      justify-content: center;
     }
     
     nav li {
-      padding: 1rem;
+      padding: 1rem 1.5rem;
     }
     
     nav a {
       color: white;
       text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
     }
     
     nav a:hover {
-      text-decoration: underline;
+      color: #fdbb2d;
     }
     
     .container {
@@ -54,42 +76,205 @@
     }
     
     .hero {
-      background-color: #f4f4f4;
-      padding: 2rem;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    
-    .features {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-      margin-bottom: 2rem;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 3rem;
     }
     
-    .feature {
+    .hero-image {
       flex: 1;
       min-width: 300px;
-      margin: 1rem;
+      height: 400px;
+      background-image: url('https://images.unsplash.com/photo-1579829366248-204fe8413f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .hero-content {
+      flex: 1;
+      min-width: 300px;
+      padding: 2rem;
+    }
+    
+    .hero-content h2 {
+      font-size: 2rem;
+      margin-top: 0;
+      color: #1a2a6c;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(to right, #1a2a6c, #b21f1f);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 1rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #1a2a6c;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(to right, #1a2a6c, #b21f1f);
+    }
+    
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .expertise-card {
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    
+    .expertise-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .card-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .card-content {
       padding: 1.5rem;
-      background-color: #f9f9f9;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card-content h3 {
+      margin-top: 0;
+      color: #1a2a6c;
+    }
+    
+    .drl-section {
+      background-color: #222;
+      color: white;
+      padding: 3rem 0;
+      margin: 3rem 0;
+    }
+    
+    .drl-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .drl-content {
+      flex: 1;
+      min-width: 300px;
+      padding-right: 2rem;
+    }
+    
+    .drl-image {
+      flex: 1;
+      min-width: 300px;
+      height: 350px;
+      background-image: url('https://images.unsplash.com/photo-1597423498219-04418210827d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80');
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+    
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    
+    .gallery-item {
+      height: 250px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+    
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+    
+    .testimonial {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 3rem;
+    }
+    
+    .testimonial-content {
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    
+    .testimonial-author {
+      font-weight: bold;
+      text-align: right;
     }
     
     footer {
-      background-color: #333;
+      background-color: #222;
       color: white;
       text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
+      padding: 2rem;
+    }
+    
+    .social-links {
+      margin-bottom: 1rem;
+    }
+    
+    .social-links a {
+      color: white;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: #fdbb2d;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Welcome to My Website</h1>
-    <p>Your go-to destination for awesome content</p>
+    <div class="header-content">
+      <h1>FPV Drone Expert</h1>
+      <p>Your guide to the exciting world of FPV drones and racing</p>
+    </div>
   </header>
   
   <nav>
@@ -101,28 +286,84 @@
   
   <div class="container">
     <section class="hero">
-      <h2>Discover Amazing Content</h2>
-      <p>This is a simple yet effective front page for your website. You can customize it to fit your needs.</p>
+      <div class="hero-image"></div>
+      <div class="hero-content">
+        <h2>Welcome to the World of FPV</h2>
+        <p>I'm an experienced FPV drone pilot and builder with years of expertise in the field. From racing drones to cinematic FPV, I've mastered the art of flying and building custom drones for various applications.</p>
+        <p>Whether you're looking to get started in the hobby or seeking advanced techniques, you've come to the right place.</p>
+        <a href="contact.html" class="cta-button">Get in Touch</a>
+      </div>
     </section>
     
-    <section class="features">
-      <div class="feature">
-        <h3>Feature One</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <h2 class="section-title">My Drone Expertise</h2>
+    <section class="expertise-grid">
+      <div class="expertise-card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1506947411487-a56738267384?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <div class="card-content">
+          <h3>Drone Building</h3>
+          <p>I specialize in building custom FPV drones from scratch. From selecting the right components to fine-tuning PID settings, I can help you create the perfect drone for your specific needs.</p>
+        </div>
       </div>
-      <div class="feature">
-        <h3>Feature Two</h3>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      
+      <div class="expertise-card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1473968512647-3e447244af8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <div class="card-content">
+          <h3>Drone Racing</h3>
+          <p>As an avid drone racer, I've participated in numerous competitions and have extensive knowledge of racing techniques, optimal setups, and the best gear for competitive racing.</p>
+        </div>
       </div>
-      <div class="feature">
-        <h3>Feature Three</h3>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      
+      <div class="expertise-card">
+        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1527977966376-1c8408f9f108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <div class="card-content">
+          <h3>Cinematic FPV</h3>
+          <p>I create breathtaking cinematic FPV footage using specialized drones. From smooth tracking shots to dynamic acrobatic maneuvers, I can capture stunning aerial perspectives.</p>
+        </div>
       </div>
     </section>
   </div>
   
+  <section class="drl-section">
+    <div class="drl-container">
+      <div class="drl-content">
+        <h2>DRL - The Drone Racing League</h2>
+        <p>I'm passionate about the Drone Racing League (DRL) and its official game, DRL Simulator. This simulator is not just a game but a training tool used by professional pilots worldwide.</p>
+        <p>The DRL Simulator offers realistic physics and helps develop the muscle memory needed for real-world drone racing. It's the perfect way to practice without risking your expensive equipment.</p>
+        <p>I can provide tips and strategies to improve your performance in both the simulator and real-life racing scenarios.</p>
+      </div>
+      <div class="drl-image"></div>
+    </div>
+  </section>
+  
+  <div class="container">
+    <h2 class="section-title">My Drone Gallery</h2>
+    <div class="gallery">
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1527977966376-1c8408f9f108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1579829366248-204fe8413f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80');"></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1508614589041-895b88991e3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1506947411487-a56738267384?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+    </div>
+    
+    <h2 class="section-title">What People Say</h2>
+    <div class="testimonial">
+      <div class="testimonial-content">
+        "I was struggling with tuning my racing drone until I got expert advice. The tips provided were invaluable and completely transformed my flying experience. Now my drone handles like a dream!"
+      </div>
+      <div class="testimonial-author">- Mike Johnson, Drone Racing Enthusiast</div>
+    </div>
+  </div>
+  
   <footer>
-    <p>&copy; 2023 My Website. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+    </div>
+    <p>&copy; 2023 FPV Drone Expert. All rights reserved.</p>
   </footer>
+
+  <!-- Font Awesome for social icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
