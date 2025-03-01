@@ -176,6 +176,9 @@
       <p>Fill out the form below and we'll get back to you as soon as possible.</p>
       
       <form action="https://formspree.io/f/mpwqvdaw" method="POST">
+        <!-- Form name for Formspree -->
+        <input type="hidden" name="_subject" value="New contact form submission">
+        
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
@@ -197,6 +200,8 @@
         </div>
         
         <button type="submit">Send Message</button>
+        
+        <div id="form-status" style="margin-top: 1rem; display: none;"></div>
       </form>
     </section>
   </div>
@@ -208,8 +213,10 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const form = document.querySelector('form');
+      const formStatus = document.getElementById('form-status');
       
       form.addEventListener('submit', function(event) {
+        event.preventDefault();
         let valid = true;
         const name = document.getElementById('name');
         const email = document.getElementById('email');
@@ -231,14 +238,35 @@
           alert('Please enter a message');
         }
         
-        if (!valid) {
-          event.preventDefault();
-        } else {
-          // If using Formspree, you need to replace YOUR_FORM_ID with your actual form ID
-          if (form.action.includes('YOUR_FORM_ID')) {
-            alert('Please replace YOUR_FORM_ID in the form action with your actual Formspree form ID');
-            event.preventDefault();
-          }
+        if (valid) {
+          // Show sending message
+          formStatus.style.display = 'block';
+          formStatus.innerHTML = '<p style="color: #4a6fa5;">Sending your message...</p>';
+          
+          // Use fetch API to submit the form
+          fetch(form.action, {
+            method: form.method,
+            body: new FormData(form),
+            headers: {
+              'Accept': 'application/json'
+            }
+          })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          })
+          .then(data => {
+            // Show success message
+            formStatus.innerHTML = '<p style="color: green;">Thank you! Your message has been sent successfully.</p>';
+            form.reset();
+          })
+          .catch(error => {
+            // Show error message
+            formStatus.innerHTML = '<p style="color: red;">Oops! There was a problem submitting your form. Please try again.</p>';
+            console.error('Error:', error);
+          });
         }
       });
     });
