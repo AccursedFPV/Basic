@@ -60,6 +60,34 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     
+    .contact-info {
+      margin-bottom: 2rem;
+    }
+    
+    .info-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 1rem 0;
+    }
+    
+    .info-item {
+      flex: 1;
+      min-width: 250px;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .info-item h3 {
+      color: #4a6fa5;
+      margin-top: 0;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+    
     .form-group {
       margin-bottom: 1.5rem;
     }
@@ -121,11 +149,33 @@
   </nav>
   
   <div class="container">
+    <div class="contact-info">
+      <h2>Contact Information</h2>
+      <div class="info-items">
+        <div class="info-item">
+          <h3>Address</h3>
+          <p>123 Main Street<br>Suite 456<br>Anytown, ST 12345</p>
+        </div>
+        <div class="info-item">
+          <h3>Phone</h3>
+          <p>Main: (555) 123-4567<br>Support: (555) 987-6543</p>
+        </div>
+        <div class="info-item">
+          <h3>Email</h3>
+          <p>info@yourwebsite.com<br>support@yourwebsite.com</p>
+        </div>
+        <div class="info-item">
+          <h3>Hours</h3>
+          <p>Monday - Friday: 9am - 5pm<br>Saturday: 10am - 2pm<br>Sunday: Closed</p>
+        </div>
+      </div>
+    </div>
+    
     <section class="contact-form">
       <h2>Get in Touch</h2>
       <p>Fill out the form below and we'll get back to you as soon as possible.</p>
       
-      <form action="#" method="post">
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
@@ -154,5 +204,44 @@
   <footer>
     <p>&copy; 2023 My Website. All rights reserved.</p>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.querySelector('form');
+      
+      form.addEventListener('submit', function(event) {
+        let valid = true;
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const subject = document.getElementById('subject');
+        const message = document.getElementById('message');
+        
+        // Simple validation
+        if (name.value.trim() === '') {
+          valid = false;
+          alert('Please enter your name');
+        } else if (email.value.trim() === '') {
+          valid = false;
+          alert('Please enter your email');
+        } else if (subject.value.trim() === '') {
+          valid = false;
+          alert('Please enter a subject');
+        } else if (message.value.trim() === '') {
+          valid = false;
+          alert('Please enter a message');
+        }
+        
+        if (!valid) {
+          event.preventDefault();
+        } else {
+          // If using Formspree, you need to replace YOUR_FORM_ID with your actual form ID
+          if (form.action.includes('YOUR_FORM_ID')) {
+            alert('Please replace YOUR_FORM_ID in the form action with your actual Formspree form ID');
+            event.preventDefault();
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html> 
