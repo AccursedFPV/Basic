@@ -776,6 +776,67 @@
   </div>
 
   <script>
+    // Website data storage
+    let websites = [
+      {
+        id: 0,
+        name: "My Business Site",
+        domain: "mybusiness.com",
+        status: "online",
+        storage: { used: 2.4, total: 10, unit: "GB" },
+        bandwidth: { used: 150, total: 500, unit: "GB" }
+      },
+      {
+        id: 1,
+        name: "E-commerce Store",
+        domain: "myshop.store",
+        status: "online",
+        storage: { used: 8.7, total: 20, unit: "GB" },
+        bandwidth: { used: 780, total: 1000, unit: "GB", displayUnit: "TB" }
+      },
+      {
+        id: 2,
+        name: "Personal Blog",
+        domain: "myblog.net",
+        status: "maintenance",
+        storage: { used: 0.8, total: 5, unit: "GB" },
+        bandwidth: { used: 45, total: 100, unit: "GB" }
+      },
+      {
+        id: 3,
+        name: "Portfolio Site",
+        domain: "myportfolio.design",
+        status: "online",
+        storage: { used: 3.2, total: 10, unit: "GB" },
+        bandwidth: { used: 120, total: 500, unit: "GB" }
+      },
+      {
+        id: 4,
+        name: "Test Project",
+        domain: "test-project.dev",
+        status: "offline",
+        storage: { used: 0.3, total: 5, unit: "GB" },
+        bandwidth: { used: 2, total: 100, unit: "GB" }
+      },
+      {
+        id: 5,
+        name: "Client Project",
+        domain: "client-project.com",
+        status: "online",
+        storage: { used: 5.7, total: 20, unit: "GB" },
+        bandwidth: { used: 350, total: 1000, unit: "GB", displayUnit: "TB" }
+      }
+    ];
+
+    // Load websites from localStorage if available
+    const savedWebsites = localStorage.getItem('hostmaster-websites');
+    if (savedWebsites) {
+      websites = JSON.parse(savedWebsites);
+    } else {
+      // Save initial data
+      localStorage.setItem('hostmaster-websites', JSON.stringify(websites));
+    }
+
     // Website cards functionality
     const websiteCards = document.querySelectorAll('.website-card');
     const editModal = document.getElementById('edit-modal');
@@ -788,20 +849,54 @@
     const cancelEditBtn = document.getElementById('cancel-edit');
     const statusFilter = document.getElementById('status-filter');
 
+    // Update UI from data
+    function updateWebsiteCards() {
+      websiteCards.forEach((card, index) => {
+        if (index < websites.length) {
+          const website = websites[index];
+          const titleSpan = card.querySelector('.website-title span');
+          const domainElement = card.querySelector('.website-domain');
+          const statusBadge = card.querySelector('.status-badge');
+          const storageLabel = card.querySelectorAll('.stat-row')[0].querySelector('span:last-child');
+          const bandwidthLabel = card.querySelectorAll('.stat-row')[1].querySelector('span:last-child');
+          const storageFill = card.querySelectorAll('.progress-fill')[0];
+          const bandwidthFill = card.querySelectorAll('.progress-fill')[1];
+          
+          // Update text content
+          titleSpan.textContent = website.name;
+          domainElement.textContent = website.domain;
+          
+          // Update status badge
+          statusBadge.classList.remove('status-online', 'status-offline', 'status-maintenance');
+          statusBadge.classList.add(`status-${website.status}`);
+          statusBadge.textContent = website.status.charAt(0).toUpperCase() + website.status.slice(1);
+          
+          // Update storage and bandwidth
+          const storagePercent = (website.storage.used / website.storage.total) * 100;
+          const bandwidthPercent = (website.bandwidth.used / website.bandwidth.total) * 100;
+          
+          storageLabel.textContent = `${website.storage.used} ${website.storage.unit} / ${website.storage.total} ${website.storage.unit}`;
+          bandwidthLabel.textContent = `${website.bandwidth.used} ${website.bandwidth.unit} / ${website.bandwidth.displayUnit ? '1 ' + website.bandwidth.displayUnit : website.bandwidth.total + ' ' + website.bandwidth.unit}`;
+          
+          storageFill.style.width = `${storagePercent}%`;
+          bandwidthFill.style.width = `${bandwidthPercent}%`;
+        }
+      });
+    }
+
+    // Initialize UI
+    updateWebsiteCards();
+
     // Edit button functionality
     websiteCards.forEach((card, index) => {
       const editBtn = card.querySelector('.btn-secondary');
-      const websiteTitle = card.querySelector('.website-title span').textContent;
-      const websiteDomain = card.querySelector('.website-domain').textContent;
-      const statusBadge = card.querySelector('.status-badge');
-      const status = statusBadge.classList.contains('status-online') ? 'online' : 
-                    statusBadge.classList.contains('status-offline') ? 'offline' : 'maintenance';
       
       editBtn.addEventListener('click', () => {
-        websiteIdInput.value = index;
-        websiteNameInput.value = websiteTitle;
-        websiteDomainInput.value = websiteDomain;
-        websiteStatusInput.value = status;
+        const website = websites[index];
+        websiteIdInput.value = website.id;
+        websiteNameInput.value = website.name;
+        websiteDomainInput.value = website.domain;
+        websiteStatusInput.value = website.status;
         editModal.style.display = 'flex';
       });
     });
@@ -825,32 +920,33 @@
     editForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      const index = websiteIdInput.value;
-      const card = websiteCards[index];
-      const titleSpan = card.querySelector('.website-title span');
-      const domainElement = card.querySelector('.website-domain');
-      const statusBadge = card.querySelector('.status-badge');
+      const id = parseInt(websiteIdInput.value);
+      const website = websites.find(site => site.id === id);
       
-      titleSpan.textContent = websiteNameInput.value;
-      domainElement.textContent = websiteDomainInput.value;
-      
-      // Update status badge
-      statusBadge.classList.remove('status-online', 'status-offline', 'status-maintenance');
-      statusBadge.classList.add(`status-${websiteStatusInput.value}`);
-      statusBadge.textContent = websiteStatusInput.value.charAt(0).toUpperCase() + websiteStatusInput.value.slice(1);
-      
-      closeModal();
+      if (website) {
+        // Update website data
+        website.name = websiteNameInput.value;
+        website.domain = websiteDomainInput.value;
+        website.status = websiteStatusInput.value;
+        
+        // Save to localStorage
+        localStorage.setItem('hostmaster-websites', JSON.stringify(websites));
+        
+        // Update UI
+        updateWebsiteCards();
+        
+        closeModal();
+      }
     });
 
     // Filter functionality
     statusFilter.addEventListener('change', () => {
       const selectedStatus = statusFilter.value;
       
-      websiteCards.forEach(card => {
-        const statusBadge = card.querySelector('.status-badge');
-        const cardStatus = statusBadge.textContent.toLowerCase();
+      websiteCards.forEach((card, index) => {
+        const website = websites[index];
         
-        if (selectedStatus === 'all' || cardStatus === selectedStatus) {
+        if (selectedStatus === 'all' || website.status === selectedStatus) {
           card.style.display = 'block';
         } else {
           card.style.display = 'none';
