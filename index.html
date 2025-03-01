@@ -775,6 +775,64 @@
     </div>
   </div>
 
+  <!-- Manage Website Modal -->
+  <div class="modal" id="manage-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Manage Website</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-form">
+        <div id="website-details">
+          <h4 id="manage-website-name"></h4>
+          <p id="manage-website-domain"></p>
+          <div class="stat-row" style="margin-top: 1rem;">
+            <span class="stat-label">Status:</span>
+            <span id="manage-website-status"></span>
+          </div>
+        </div>
+        <div style="margin-top: 1rem;">
+          <h4>Quick Actions</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem;">
+            <button class="btn-primary" id="restart-btn">
+              <i class="fas fa-sync-alt"></i> Restart
+            </button>
+            <button class="btn-secondary" id="backup-btn">
+              <i class="fas fa-save"></i> Backup
+            </button>
+            <button class="btn-secondary" id="logs-btn">
+              <i class="fas fa-list"></i> View Logs
+            </button>
+            <button class="btn-secondary" id="stats-btn">
+              <i class="fas fa-chart-line"></i> Statistics
+            </button>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="close-manage">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="delete-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Delete Website</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-form">
+        <p>Are you sure you want to delete <strong id="delete-website-name"></strong>?</p>
+        <p style="color: var(--danger-color); margin-top: 0.5rem;">This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-delete">Cancel</button>
+          <button type="button" class="btn-danger" id="confirm-delete">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Website data storage
     let websites = [
@@ -904,14 +962,19 @@
     // Close modal
     function closeModal() {
       editModal.style.display = 'none';
+      manageModal.style.display = 'none';
+      deleteModal.style.display = 'none';
     }
 
     closeModalBtn.addEventListener('click', closeModal);
     cancelEditBtn.addEventListener('click', closeModal);
+    document.querySelectorAll('.close-modal').forEach(btn => {
+      btn.addEventListener('click', closeModal);
+    });
 
     // Close modal when clicking outside
     window.addEventListener('click', (e) => {
-      if (e.target === editModal) {
+      if (e.target === editModal || e.target === manageModal || e.target === deleteModal) {
         closeModal();
       }
     });
@@ -952,6 +1015,103 @@
           card.style.display = 'none';
         }
       });
+    });
+
+    // Manage button functionality
+    const manageModal = document.getElementById('manage-modal');
+    const closeManageBtn = document.getElementById('close-manage');
+    const manageWebsiteName = document.getElementById('manage-website-name');
+    const manageWebsiteDomain = document.getElementById('manage-website-domain');
+    const manageWebsiteStatus = document.getElementById('manage-website-status');
+    
+    // Quick action buttons
+    const restartBtn = document.getElementById('restart-btn');
+    const backupBtn = document.getElementById('backup-btn');
+    const logsBtn = document.getElementById('logs-btn');
+    const statsBtn = document.getElementById('stats-btn');
+    
+    websiteCards.forEach((card, index) => {
+      const manageBtn = card.querySelector('.btn-primary');
+      
+      manageBtn.addEventListener('click', () => {
+        const website = websites[index];
+        
+        // Update manage modal with website details
+        manageWebsiteName.textContent = website.name;
+        manageWebsiteDomain.textContent = website.domain;
+        
+        // Set status with appropriate styling
+        manageWebsiteStatus.textContent = website.status.charAt(0).toUpperCase() + website.status.slice(1);
+        manageWebsiteStatus.className = '';
+        manageWebsiteStatus.classList.add(`status-${website.status}`);
+        
+        // Show manage modal
+        manageModal.style.display = 'flex';
+      });
+    });
+    
+    closeManageBtn.addEventListener('click', closeModal);
+    
+    // Demo functionality for quick action buttons
+    restartBtn.addEventListener('click', () => {
+      alert('Restarting website...');
+      setTimeout(() => {
+        alert('Website restarted successfully!');
+      }, 1000);
+    });
+    
+    backupBtn.addEventListener('click', () => {
+      alert('Creating backup...');
+      setTimeout(() => {
+        alert('Backup created successfully!');
+      }, 1000);
+    });
+    
+    logsBtn.addEventListener('click', () => {
+      alert('Fetching logs...');
+    });
+    
+    statsBtn.addEventListener('click', () => {
+      alert('Loading statistics...');
+    });
+
+    // Delete button functionality
+    const deleteModal = document.getElementById('delete-modal');
+    const deleteWebsiteName = document.getElementById('delete-website-name');
+    const cancelDeleteBtn = document.getElementById('cancel-delete');
+    const confirmDeleteBtn = document.getElementById('confirm-delete');
+    let websiteToDelete = null;
+    
+    websiteCards.forEach((card, index) => {
+      const deleteBtn = card.querySelector('.btn-danger');
+      
+      deleteBtn.addEventListener('click', () => {
+        const website = websites[index];
+        websiteToDelete = website;
+        
+        // Update delete modal with website name
+        deleteWebsiteName.textContent = website.name;
+        
+        // Show delete modal
+        deleteModal.style.display = 'flex';
+      });
+    });
+    
+    cancelDeleteBtn.addEventListener('click', closeModal);
+    
+    confirmDeleteBtn.addEventListener('click', () => {
+      if (websiteToDelete) {
+        // Remove website from array
+        websites = websites.filter(site => site.id !== websiteToDelete.id);
+        
+        // Save to localStorage
+        localStorage.setItem('hostmaster-websites', JSON.stringify(websites));
+        
+        // Reload page to update UI
+        window.location.reload();
+      }
+      
+      closeModal();
     });
   </script>
 </body>
