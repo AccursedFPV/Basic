@@ -22,18 +22,6 @@
       --transition: all 0.3s ease;
     }
 
-    .light-mode {
-      --primary-color: #2563eb;
-      --primary-dark: #1d4ed8;
-      --secondary-color: #64748b;
-      --light-color: #f8fafc;
-      --dark-color: #1e293b;
-      --darker-color: #0f172a;
-      --card-color: white;
-      --border-color: #e2e8f0;
-      --card-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
-    }
-
     * {
       margin: 0;
       padding: 0;
@@ -47,11 +35,6 @@
       line-height: 1.4;
       font-size: 0.875rem;
       transition: var(--transition);
-    }
-
-    .light-mode body {
-      background-color: var(--light-color);
-      color: var(--dark-color);
     }
 
     a {
@@ -110,10 +93,6 @@
       z-index: 100;
     }
 
-    .light-mode header {
-      background-color: white;
-    }
-
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -151,10 +130,6 @@
       transition: var(--transition);
     }
 
-    .light-mode .nav-links a {
-      color: var(--dark-color);
-    }
-
     .nav-links a:hover {
       color: var(--primary-color);
     }
@@ -163,19 +138,6 @@
       color: var(--primary-color);
       border-bottom: 2px solid var(--primary-color);
       padding-bottom: 3px;
-    }
-
-    .theme-toggle {
-      background: none;
-      border: none;
-      color: var(--light-color);
-      font-size: 1rem;
-      cursor: pointer;
-      margin-left: 1.2rem;
-    }
-
-    .light-mode .theme-toggle {
-      color: var(--dark-color);
     }
 
     /* Main Content */
@@ -214,11 +176,6 @@
       transition: var(--transition);
     }
 
-    .light-mode .stat-card {
-      background-color: white;
-      color: var(--dark-color);
-    }
-
     .stat-card:hover {
       transform: translateY(-3px);
     }
@@ -235,10 +192,6 @@
       color: var(--secondary-color);
     }
 
-    .light-mode .stat-title {
-      color: var(--secondary-color);
-    }
-
     .stat-icon {
       font-size: 1.1rem;
       color: var(--primary-color);
@@ -252,10 +205,6 @@
 
     .stat-description {
       font-size: 0.75rem;
-      color: var(--secondary-color);
-    }
-
-    .light-mode .stat-description {
       color: var(--secondary-color);
     }
 
@@ -280,10 +229,6 @@
       max-width: 400px;
     }
 
-    .light-mode .search-box {
-      background-color: white;
-    }
-
     .search-box input {
       border: none;
       outline: none;
@@ -292,10 +237,6 @@
       width: 100%;
       color: var(--light-color);
       font-size: 0.8rem;
-    }
-
-    .light-mode .search-box input {
-      color: var(--dark-color);
     }
 
     .search-box i {
@@ -318,11 +259,6 @@
       font-size: 0.8rem;
     }
 
-    .light-mode .filter-select {
-      background-color: white;
-      color: var(--dark-color);
-    }
-
     /* Website Cards */
     .websites-grid {
       display: grid;
@@ -336,11 +272,6 @@
       overflow: hidden;
       box-shadow: var(--card-shadow);
       transition: var(--transition);
-    }
-
-    .light-mode .website-card {
-      background-color: white;
-      color: var(--dark-color);
     }
 
     .website-card:hover {
@@ -365,10 +296,6 @@
       color: var(--secondary-color);
       font-size: 0.75rem;
       margin-bottom: 0.5rem;
-    }
-
-    .light-mode .website-domain {
-      color: var(--secondary-color);
     }
 
     .status-badge {
@@ -408,10 +335,6 @@
       color: var(--secondary-color);
     }
 
-    .light-mode .stat-label {
-      color: var(--secondary-color);
-    }
-
     .progress-bar {
       height: 4px;
       background-color: var(--border-color);
@@ -432,10 +355,6 @@
       padding: 0.5rem 0.8rem;
       background-color: rgba(255, 255, 255, 0.05);
       border-top: 1px solid var(--border-color);
-    }
-
-    .light-mode .website-actions {
-      background-color: rgba(0, 0, 0, 0.02);
     }
 
     /* Modal Styles */
@@ -461,11 +380,6 @@
       box-shadow: var(--card-shadow);
       color: var(--light-color);
       font-size: 0.85rem;
-    }
-
-    .light-mode .modal-content {
-      background-color: white;
-      color: var(--dark-color);
     }
 
     .modal-header {
@@ -514,12 +428,6 @@
       font-size: 0.8rem;
     }
 
-    .light-mode .form-group input, .light-mode .form-group select {
-      background-color: white;
-      color: var(--dark-color);
-      border-color: var(--border-color);
-    }
-
     .modal-actions {
       display: flex;
       justify-content: flex-end;
@@ -542,12 +450,6 @@
 
       .nav-links li {
         margin-left: 0;
-      }
-
-      .theme-toggle {
-        position: absolute;
-        top: 0.8rem;
-        right: 0.8rem;
       }
 
       .dashboard-header {
@@ -580,9 +482,6 @@
       </div>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Dashboard</a></li>
-        <li><button id="theme-toggle" class="theme-toggle">
-          <i class="fas fa-moon"></i>
-        </button></li>
       </ul>
     </nav>
   </header>
@@ -877,30 +776,6 @@
   </div>
 
   <script>
-    // Theme toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
-
-    // Check for saved theme preference or use preferred color scheme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-      body.classList.add('light-mode');
-      icon.classList.replace('fa-moon', 'fa-sun');
-    }
-
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('light-mode');
-      
-      if (body.classList.contains('light-mode')) {
-        icon.classList.replace('fa-moon', 'fa-sun');
-        localStorage.setItem('theme', 'light');
-      } else {
-        icon.classList.replace('fa-sun', 'fa-moon');
-        localStorage.setItem('theme', 'dark');
-      }
-    });
-
     // Website cards functionality
     const websiteCards = document.querySelectorAll('.website-card');
     const editModal = document.getElementById('edit-modal');
