@@ -489,7 +489,7 @@
   <div class="container">
     <div class="dashboard-header">
       <h1 class="dashboard-title">Website Dashboard</h1>
-      <button class="btn-primary">
+      <button class="btn-primary" id="add-website-btn">
         <i class="fas fa-plus"></i> Add New Website
       </button>
     </div>
@@ -643,6 +643,52 @@
     </div>
   </div>
 
+  <!-- Add New Website Modal -->
+  <div class="modal" id="add-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Website</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <form class="modal-form" id="add-form">
+        <div class="form-group">
+          <label for="new-website-name">Website Name</label>
+          <input type="text" id="new-website-name" required>
+        </div>
+        <div class="form-group">
+          <label for="new-website-domain">Domain</label>
+          <input type="text" id="new-website-domain" required>
+        </div>
+        <div class="form-group">
+          <label for="new-website-status">Status</label>
+          <select id="new-website-status">
+            <option value="online">Online</option>
+            <option value="offline">Offline</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="new-website-storage">Storage (GB)</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="number" id="new-website-storage-used" placeholder="Used" min="0" step="0.1" required style="width: 50%;">
+            <input type="number" id="new-website-storage-total" placeholder="Total" min="0.1" step="0.1" required style="width: 50%;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="new-website-bandwidth">Bandwidth (GB)</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="number" id="new-website-bandwidth-used" placeholder="Used" min="0" required style="width: 50%;">
+            <input type="number" id="new-website-bandwidth-total" placeholder="Total" min="1" required style="width: 50%;">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-add">Cancel</button>
+          <button type="submit" class="btn-primary">Add Website</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     // Website data storage
     let websites = [
@@ -728,6 +774,10 @@
     const backupBtn = document.getElementById('backup-btn');
     const logsBtn = document.getElementById('logs-btn');
     const statsBtn = document.getElementById('stats-btn');
+    const addWebsiteBtn = document.getElementById('add-website-btn');
+    const addModal = document.getElementById('add-modal');
+    const addForm = document.getElementById('add-form');
+    const cancelAddBtn = document.getElementById('cancel-add');
     
     // Variable to store website to delete
     let websiteToDelete = null;
@@ -743,17 +793,19 @@
       editModal.style.display = 'none';
       manageModal.style.display = 'none';
       deleteModal.style.display = 'none';
+      addModal.style.display = 'none';
     }
 
     closeModalBtn.addEventListener('click', closeModal);
     cancelEditBtn.addEventListener('click', closeModal);
+    cancelAddBtn.addEventListener('click', closeModal);
     document.querySelectorAll('.close-modal').forEach(btn => {
       btn.addEventListener('click', closeModal);
     });
 
     // Close modal when clicking outside
     window.addEventListener('click', (e) => {
-      if (e.target === editModal || e.target === manageModal || e.target === deleteModal) {
+      if (e.target === editModal || e.target === manageModal || e.target === deleteModal || e.target === addModal) {
         closeModal();
       }
     });
@@ -838,6 +890,63 @@
         updateWebsitesDisplay();
       }
       
+      closeModal();
+    });
+
+    // Add Website button click
+    addWebsiteBtn.addEventListener('click', () => {
+      // Reset form
+      addForm.reset();
+      
+      // Show add modal
+      addModal.style.display = 'flex';
+    });
+
+    // Handle add form submission
+    addForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Generate a new ID (highest ID + 1)
+      const newId = websites.length > 0 ? Math.max(...websites.map(site => site.id)) + 1 : 0;
+      
+      // Get form values
+      const name = document.getElementById('new-website-name').value;
+      const domain = document.getElementById('new-website-domain').value;
+      const status = document.getElementById('new-website-status').value;
+      const storageUsed = parseFloat(document.getElementById('new-website-storage-used').value);
+      const storageTotal = parseFloat(document.getElementById('new-website-storage-total').value);
+      const bandwidthUsed = parseFloat(document.getElementById('new-website-bandwidth-used').value);
+      const bandwidthTotal = parseFloat(document.getElementById('new-website-bandwidth-total').value);
+      
+      // Create new website object
+      const newWebsite = {
+        id: newId,
+        name: name,
+        domain: domain,
+        status: status,
+        storage: {
+          used: storageUsed,
+          total: storageTotal,
+          unit: "GB"
+        },
+        bandwidth: {
+          used: bandwidthUsed,
+          total: bandwidthTotal,
+          unit: "GB",
+          displayUnit: bandwidthTotal >= 1000 ? "TB" : null
+        }
+      };
+      
+      // Add to websites array
+      websites.push(newWebsite);
+      
+      // Save to localStorage
+      localStorage.setItem('hostmaster-websites', JSON.stringify(websites));
+      
+      // Update UI
+      updateWebsitesDisplay();
+      
+      // Close modal
       closeModal();
     });
 
