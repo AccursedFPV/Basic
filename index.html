@@ -7,28 +7,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
+      --primary-color: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --secondary-color: #94a3b8;
+      --light-color: #f8fafc;
+      --dark-color: #0f172a;
+      --darker-color: #0b1120;
+      --card-color: #1e293b;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --border-color: #334155;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    .light-mode {
       --primary-color: #2563eb;
       --primary-dark: #1d4ed8;
       --secondary-color: #64748b;
       --light-color: #f8fafc;
       --dark-color: #1e293b;
-      --success-color: #10b981;
-      --warning-color: #f59e0b;
-      --danger-color: #ef4444;
+      --darker-color: #0f172a;
+      --card-color: white;
       --border-color: #e2e8f0;
       --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --transition: all 0.3s ease;
-    }
-
-    .dark-mode {
-      --primary-color: #3b82f6;
-      --primary-dark: #2563eb;
-      --secondary-color: #94a3b8;
-      --light-color: #1e293b;
-      --dark-color: #f8fafc;
-      --border-color: #334155;
-      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
-      background-color: #0f172a;
     }
 
     * {
@@ -39,10 +42,15 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--light-color);
-      color: var(--dark-color);
+      background-color: var(--dark-color);
+      color: var(--light-color);
       line-height: 1.6;
       transition: var(--transition);
+    }
+
+    .light-mode body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
     }
 
     a {
@@ -93,15 +101,15 @@
 
     /* Header & Navigation */
     header {
-      background-color: white;
+      background-color: var(--darker-color);
       box-shadow: var(--card-shadow);
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
-    .dark-mode header {
-      background-color: var(--dark-color);
+    .light-mode header {
+      background-color: white;
     }
 
     .navbar {
@@ -135,13 +143,13 @@
     }
 
     .nav-links a {
-      color: var(--dark-color);
+      color: var(--light-color);
       font-weight: 500;
       transition: var(--transition);
     }
 
-    .dark-mode .nav-links a {
-      color: var(--light-color);
+    .light-mode .nav-links a {
+      color: var(--dark-color);
     }
 
     .nav-links a:hover {
@@ -157,14 +165,14 @@
     .theme-toggle {
       background: none;
       border: none;
-      color: var(--dark-color);
+      color: var(--light-color);
       font-size: 1.2rem;
       cursor: pointer;
       margin-left: 1.5rem;
     }
 
-    .dark-mode .theme-toggle {
-      color: var(--light-color);
+    .light-mode .theme-toggle {
+      color: var(--dark-color);
     }
 
     /* Main Content */
@@ -196,16 +204,16 @@
     }
 
     .stat-card {
-      background-color: white;
+      background-color: var(--card-color);
       border-radius: 8px;
       padding: 1.5rem;
       box-shadow: var(--card-shadow);
       transition: var(--transition);
     }
 
-    .dark-mode .stat-card {
-      background-color: #1e293b;
-      color: #f1f5f9;
+    .light-mode .stat-card {
+      background-color: white;
+      color: var(--dark-color);
     }
 
     .stat-card:hover {
@@ -224,8 +232,8 @@
       color: var(--secondary-color);
     }
 
-    .dark-mode .stat-title {
-      color: #cbd5e1;
+    .light-mode .stat-title {
+      color: var(--secondary-color);
     }
 
     .stat-icon {
@@ -244,8 +252,8 @@
       color: var(--secondary-color);
     }
 
-    .dark-mode .stat-description {
-      color: #cbd5e1;
+    .light-mode .stat-description {
+      color: var(--secondary-color);
     }
 
     /* Search and Filter */
@@ -261,7 +269,7 @@
     .search-box {
       display: flex;
       align-items: center;
-      background-color: white;
+      background-color: var(--darker-color);
       border-radius: 8px;
       padding: 0.5rem 1rem;
       box-shadow: var(--card-shadow);
@@ -269,8 +277,8 @@
       max-width: 400px;
     }
 
-    .dark-mode .search-box {
-      background-color: var(--dark-color);
+    .light-mode .search-box {
+      background-color: white;
     }
 
     .search-box input {
@@ -279,11 +287,11 @@
       background: transparent;
       padding: 0.5rem;
       width: 100%;
-      color: var(--dark-color);
+      color: var(--light-color);
     }
 
-    .dark-mode .search-box input {
-      color: var(--light-color);
+    .light-mode .search-box input {
+      color: var(--dark-color);
     }
 
     .search-box i {
@@ -299,14 +307,14 @@
       padding: 0.5rem 1rem;
       border-radius: 8px;
       border: 1px solid var(--border-color);
-      background-color: white;
-      color: var(--dark-color);
+      background-color: var(--darker-color);
+      color: var(--light-color);
       outline: none;
     }
 
-    .dark-mode .filter-select {
-      background-color: var(--dark-color);
-      color: var(--light-color);
+    .light-mode .filter-select {
+      background-color: white;
+      color: var(--dark-color);
     }
 
     /* Website Cards */
@@ -317,7 +325,7 @@
     }
 
     .website-card {
-      background-color: white;
+      background-color: var(--card-color);
       border-radius: 8px;
       overflow: hidden;
       box-shadow: var(--card-shadow);
@@ -325,9 +333,9 @@
       max-width: 400px;
     }
 
-    .dark-mode .website-card {
-      background-color: #1e293b;
-      color: #f1f5f9;
+    .light-mode .website-card {
+      background-color: white;
+      color: var(--dark-color);
     }
 
     .website-card:hover {
@@ -354,8 +362,8 @@
       margin-bottom: 1rem;
     }
 
-    .dark-mode .website-domain {
-      color: #cbd5e1;
+    .light-mode .website-domain {
+      color: var(--secondary-color);
     }
 
     .status-badge {
@@ -394,8 +402,8 @@
       color: var(--secondary-color);
     }
 
-    .dark-mode .stat-label {
-      color: #cbd5e1;
+    .light-mode .stat-label {
+      color: var(--secondary-color);
     }
 
     .progress-bar {
@@ -415,12 +423,12 @@
       display: flex;
       justify-content: space-between;
       padding: 1rem 1.5rem;
-      background-color: rgba(0, 0, 0, 0.02);
+      background-color: rgba(255, 255, 255, 0.05);
       border-top: 1px solid var(--border-color);
     }
 
-    .dark-mode .website-actions {
-      background-color: rgba(255, 255, 255, 0.05);
+    .light-mode .website-actions {
+      background-color: rgba(0, 0, 0, 0.02);
     }
 
     /* Modal Styles */
@@ -438,17 +446,18 @@
     }
 
     .modal-content {
-      background-color: white;
+      background-color: var(--card-color);
       border-radius: 8px;
       padding: 2rem;
       width: 90%;
       max-width: 500px;
       box-shadow: var(--card-shadow);
+      color: var(--light-color);
     }
 
-    .dark-mode .modal-content {
-      background-color: #1e293b;
-      color: #f1f5f9;
+    .light-mode .modal-content {
+      background-color: white;
+      color: var(--dark-color);
     }
 
     .modal-header {
@@ -491,13 +500,14 @@
       padding: 0.75rem;
       border-radius: 4px;
       border: 1px solid var(--border-color);
-      background-color: white;
+      background-color: var(--darker-color);
+      color: var(--light-color);
     }
 
-    .dark-mode .form-group input, .dark-mode .form-group select {
-      background-color: #0f172a;
-      color: #f1f5f9;
-      border-color: #334155;
+    .light-mode .form-group input, .light-mode .form-group select {
+      background-color: white;
+      color: var(--dark-color);
+      border-color: var(--border-color);
     }
 
     .modal-actions {
@@ -655,10 +665,6 @@
           <div class="progress-bar">
             <div class="progress-fill" style="width: 30%"></div>
           </div>
-          <div class="stat-row">
-            <span class="stat-label">Plan</span>
-            <span>Premium</span>
-          </div>
         </div>
         <div class="website-actions">
           <button class="btn-primary btn-sm">Manage</button>
@@ -690,10 +696,6 @@
           </div>
           <div class="progress-bar">
             <div class="progress-fill" style="width: 78%"></div>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Plan</span>
-            <span>Business</span>
           </div>
         </div>
         <div class="website-actions">
@@ -727,10 +729,6 @@
           <div class="progress-bar">
             <div class="progress-fill" style="width: 45%"></div>
           </div>
-          <div class="stat-row">
-            <span class="stat-label">Plan</span>
-            <span>Basic</span>
-          </div>
         </div>
         <div class="website-actions">
           <button class="btn-primary btn-sm">Manage</button>
@@ -762,10 +760,6 @@
           </div>
           <div class="progress-bar">
             <div class="progress-fill" style="width: 24%"></div>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Plan</span>
-            <span>Premium</span>
           </div>
         </div>
         <div class="website-actions">
@@ -799,10 +793,6 @@
           <div class="progress-bar">
             <div class="progress-fill" style="width: 2%"></div>
           </div>
-          <div class="stat-row">
-            <span class="stat-label">Plan</span>
-            <span>Basic</span>
-          </div>
         </div>
         <div class="website-actions">
           <button class="btn-primary btn-sm">Manage</button>
@@ -834,10 +824,6 @@
           </div>
           <div class="progress-bar">
             <div class="progress-fill" style="width: 35%"></div>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Plan</span>
-            <span>Business</span>
           </div>
         </div>
         <div class="website-actions">
@@ -883,27 +869,27 @@
   </div>
 
   <script>
-    // Dark mode toggle
+    // Theme toggle
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     const icon = themeToggle.querySelector('i');
 
     // Check for saved theme preference or use preferred color scheme
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      body.classList.add('dark-mode');
+    if (savedTheme === 'light') {
+      body.classList.add('light-mode');
       icon.classList.replace('fa-moon', 'fa-sun');
     }
 
     themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
+      body.classList.toggle('light-mode');
       
-      if (body.classList.contains('dark-mode')) {
+      if (body.classList.contains('light-mode')) {
         icon.classList.replace('fa-moon', 'fa-sun');
-        localStorage.setItem('theme', 'dark');
+        localStorage.setItem('theme', 'light');
       } else {
         icon.classList.replace('fa-sun', 'fa-moon');
-        localStorage.setItem('theme', 'light');
+        localStorage.setItem('theme', 'dark');
       }
     });
 
