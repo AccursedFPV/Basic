@@ -3,367 +3,779 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FPV Drone Expert - Home</title>
+  <title>HostMaster - Web Hosting Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      line-height: 1.6;
+    :root {
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary-color: #64748b;
+      --light-color: #f8fafc;
+      --dark-color: #1e293b;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --border-color: #e2e8f0;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --transition: all 0.3s ease;
+    }
+
+    .dark-mode {
+      --primary-color: #3b82f6;
+      --primary-dark: #2563eb;
+      --secondary-color: #94a3b8;
+      --light-color: #1e293b;
+      --dark-color: #f8fafc;
+      --border-color: #334155;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      color: #333;
-      background-color: #f8f9fa;
+      box-sizing: border-box;
     }
-    
-    header {
-      background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary-color);
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
       color: white;
-      padding: 2rem 0;
-      text-align: center;
     }
-    
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
     }
-    
-    .header-content h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+    .btn-secondary {
+      background-color: var(--secondary-color);
+      color: white;
     }
-    
-    .header-content p {
-      font-size: 1.2rem;
-      margin-top: 0;
+
+    .btn-secondary:hover {
+      opacity: 0.9;
     }
-    
-    nav {
-      background-color: #222;
+
+    .btn-danger {
+      background-color: var(--danger-color);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      opacity: 0.9;
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 0.85rem;
+    }
+
+    /* Header & Navigation */
+    header {
+      background-color: white;
+      box-shadow: var(--card-shadow);
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-    
-    nav ul {
+
+    .dark-mode header {
+      background-color: var(--dark-color);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .logo i {
+      margin-right: 0.5rem;
+    }
+
+    .nav-links {
       display: flex;
       list-style: none;
-      margin: 0;
-      padding: 0;
-      justify-content: center;
     }
-    
-    nav li {
-      padding: 1rem 1.5rem;
+
+    .nav-links li {
+      margin-left: 1.5rem;
     }
-    
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
+
+    .nav-links a {
+      color: var(--dark-color);
+      font-weight: 500;
+      transition: var(--transition);
     }
-    
-    nav a:hover {
-      color: #fdbb2d;
+
+    .dark-mode .nav-links a {
+      color: var(--light-color);
     }
-    
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .nav-links a.active {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 5px;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--dark-color);
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-left: 1.5rem;
+    }
+
+    .dark-mode .theme-toggle {
+      color: var(--light-color);
+    }
+
+    /* Main Content */
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    
-    .hero {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      background-color: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      margin-bottom: 3rem;
-    }
-    
-    .hero-image {
-      flex: 1;
-      min-width: 300px;
-      height: 400px;
-      background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');
-      background-size: cover;
-      background-position: center;
-    }
-    
-    .hero-content {
-      flex: 1;
-      min-width: 300px;
-      padding: 2rem;
-    }
-    
-    .hero-content h2 {
-      font-size: 2rem;
-      margin-top: 0;
-      color: #1a2a6c;
-    }
-    
-    .cta-button {
-      display: inline-block;
-      background: linear-gradient(to right, #1a2a6c, #b21f1f);
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 1rem;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    
-    .cta-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-    
-    .section-title {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #1a2a6c;
-      position: relative;
-      padding-bottom: 1rem;
-    }
-    
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: linear-gradient(to right, #1a2a6c, #b21f1f);
-    }
-    
-    .expertise-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-    
-    .expertise-card {
-      background-color: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
-    }
-    
-    .expertise-card:hover {
-      transform: translateY(-5px);
-    }
-    
-    .card-image {
-      height: 200px;
-      background-size: cover;
-      background-position: center;
-    }
-    
-    .card-content {
-      padding: 1.5rem;
-    }
-    
-    .card-content h3 {
-      margin-top: 0;
-      color: #1a2a6c;
-    }
-    
-    .drl-section {
-      background-color: #222;
-      color: white;
-      padding: 3rem 0;
-      margin: 3rem 0;
-    }
-    
-    .drl-container {
-      max-width: 1200px;
-      margin: 0 auto;
+      max-width: 1400px;
+      margin: 2rem auto;
       padding: 0 2rem;
+    }
+
+    .dashboard-header {
       display: flex;
-      flex-wrap: wrap;
+      justify-content: space-between;
       align-items: center;
+      margin-bottom: 2rem;
     }
-    
-    .drl-content {
-      flex: 1;
-      min-width: 300px;
-      padding-right: 2rem;
+
+    .dashboard-title {
+      font-size: 1.8rem;
+      font-weight: 600;
     }
-    
-    .drl-image {
-      flex: 1;
-      min-width: 300px;
-      height: 350px;
-      background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');
-      background-size: cover;
-      background-position: center;
-      border-radius: 8px;
-    }
-    
-    .gallery {
+
+    /* Stats Cards */
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      margin-bottom: 3rem;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
-    
-    .gallery-item {
-      height: 250px;
-      background-size: cover;
-      background-position: center;
+
+    .stat-card {
+      background-color: white;
       border-radius: 8px;
-      transition: transform 0.3s;
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
     }
-    
-    .gallery-item:hover {
-      transform: scale(1.03);
+
+    .dark-mode .stat-card {
+      background-color: var(--dark-color);
+      color: var(--light-color);
     }
-    
-    .testimonial {
-      background-color: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 3rem;
+
+    .stat-card:hover {
+      transform: translateY(-5px);
     }
-    
-    .testimonial-content {
-      font-style: italic;
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1rem;
     }
-    
-    .testimonial-author {
-      font-weight: bold;
-      text-align: right;
+
+    .stat-title {
+      font-size: 1rem;
+      color: var(--secondary-color);
     }
-    
-    footer {
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 2rem;
-    }
-    
-    .social-links {
-      margin-bottom: 1rem;
-    }
-    
-    .social-links a {
-      color: white;
-      margin: 0 10px;
+
+    .stat-icon {
       font-size: 1.5rem;
-      transition: color 0.3s;
+      color: var(--primary-color);
     }
-    
-    .social-links a:hover {
-      color: #fdbb2d;
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-description {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+
+    /* Search and Filter */
+    .search-filter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      box-shadow: var(--card-shadow);
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .dark-mode .search-box {
+      background-color: var(--dark-color);
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0.5rem;
+      width: 100%;
+      color: var(--dark-color);
+    }
+
+    .dark-mode .search-box input {
+      color: var(--light-color);
+    }
+
+    .search-box i {
+      color: var(--secondary-color);
+    }
+
+    .filter-options {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .filter-select {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background-color: white;
+      color: var(--dark-color);
+      outline: none;
+    }
+
+    .dark-mode .filter-select {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+    }
+
+    /* Website Cards */
+    .websites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .website-card {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+    }
+
+    .dark-mode .website-card {
+      background-color: var(--dark-color);
+    }
+
+    .website-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .website-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .website-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .website-domain {
+      color: var(--secondary-color);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .status-online {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--success-color);
+    }
+
+    .status-offline {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: var(--danger-color);
+    }
+
+    .status-maintenance {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: var(--warning-color);
+    }
+
+    .website-stats {
+      padding: 1.5rem;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .stat-label {
+      color: var(--secondary-color);
+    }
+
+    .progress-bar {
+      height: 6px;
+      background-color: var(--border-color);
+      border-radius: 3px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--primary-color);
+    }
+
+    .website-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background-color: rgba(0, 0, 0, 0.02);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .dark-mode .website-actions {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .nav-links {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .nav-links li {
+        margin-left: 0;
+      }
+
+      .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .search-filter {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        max-width: 100%;
+      }
+
+      .filter-options {
+        justify-content: space-between;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="header-content">
-      <h1>FPV Drone Expert</h1>
-      <p>Your guide to the exciting world of FPV drones and racing</p>
-    </div>
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-server"></i>
+        <span>HostMaster</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Dashboard</a></li>
+        <li><a href="#">Plans</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#">Support</a></li>
+        <li><button id="theme-toggle" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button></li>
+      </ul>
+    </nav>
   </header>
-  
-  <nav>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
-  
-  <div class="container">
-    <section class="hero">
-      <div class="hero-image"></div>
-      <div class="hero-content">
-        <h2>Welcome to the World of FPV</h2>
-        <p>I'm an experienced FPV drone pilot and builder with years of expertise in the field. From racing drones to cinematic FPV, I've mastered the art of flying and building custom drones for various applications.</p>
-        <p>Whether you're looking to get started in the hobby or seeking advanced techniques, you've come to the right place.</p>
-        <a href="contact.html" class="cta-button">Get in Touch</a>
-      </div>
-    </section>
-    
-    <h2 class="section-title">My Drone Expertise</h2>
-    <section class="expertise-grid">
-      <div class="expertise-card">
-        <div class="card-image" style="background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');"></div>
-        <div class="card-content">
-          <h3>Drone Building</h3>
-          <p>I specialize in building custom FPV drones from scratch. From selecting the right components to fine-tuning PID settings, I can help you create the perfect drone for your specific needs.</p>
-        </div>
-      </div>
-      
-      <div class="expertise-card">
-        <div class="card-image" style="background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');"></div>
-        <div class="card-content">
-          <h3>Drone Racing</h3>
-          <p>As an avid drone racer, I've participated in numerous competitions and have extensive knowledge of racing techniques, optimal setups, and the best gear for competitive racing.</p>
-        </div>
-      </div>
-      
-      <div class="expertise-card">
-        <div class="card-image" style="background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');"></div>
-        <div class="card-content">
-          <h3>Cinematic FPV</h3>
-          <p>I create breathtaking cinematic FPV footage using specialized drones. From smooth tracking shots to dynamic acrobatic maneuvers, I can capture stunning aerial perspectives.</p>
-        </div>
-      </div>
-    </section>
-  </div>
-  
-  <section class="drl-section">
-    <div class="drl-container">
-      <div class="drl-content">
-        <h2>DRL - The Drone Racing League</h2>
-        <p>I'm passionate about the Drone Racing League (DRL) and its official game, DRL Simulator. This simulator is not just a game but a training tool used by professional pilots worldwide.</p>
-        <p>The DRL Simulator offers realistic physics and helps develop the muscle memory needed for real-world drone racing. It's the perfect way to practice without risking your expensive equipment.</p>
-        <p>I can provide tips and strategies to improve your performance in both the simulator and real-life racing scenarios.</p>
-      </div>
-      <div class="drl-image"></div>
-    </div>
-  </section>
-  
-  <div class="container">
-    <h2 class="section-title">My Drone Gallery</h2>
-    <div class="gallery">
-      <div class="gallery-item" style="background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');"></div>
-      <div class="gallery-item" style="background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');"></div>
-      <div class="gallery-item" style="background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');"></div>
-      <div class="gallery-item" style="background-image: url('https://www.racedayquads.com/cdn/shop/products/5inchFPVFreestyleDrone-2_1800x1800.jpg');"></div>
-    </div>
-    
-    <h2 class="section-title">What People Say</h2>
-    <div class="testimonial">
-      <div class="testimonial-content">
-        "I was struggling with tuning my racing drone until I got expert advice. The tips provided were invaluable and completely transformed my flying experience. Now my drone handles like a dream!"
-      </div>
-      <div class="testimonial-author">- Mike Johnson, Drone Racing Enthusiast</div>
-    </div>
-  </div>
-  
-  <footer>
-    <div class="social-links">
-      <a href="#"><i class="fab fa-youtube"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-facebook"></i></a>
-    </div>
-    <p>&copy; 2023 FPV Drone Expert. All rights reserved.</p>
-  </footer>
 
-  <!-- Font Awesome for social icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <div class="container">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">Website Dashboard</h1>
+      <button class="btn-primary">
+        <i class="fas fa-plus"></i> Add New Website
+      </button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Total Websites</span>
+          <i class="fas fa-globe stat-icon"></i>
+        </div>
+        <div class="stat-value">12</div>
+        <div class="stat-description">2 added this month</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Server Load</span>
+          <i class="fas fa-server stat-icon"></i>
+        </div>
+        <div class="stat-value">28%</div>
+        <div class="stat-description">Normal operation</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Bandwidth Usage</span>
+          <i class="fas fa-network-wired stat-icon"></i>
+        </div>
+        <div class="stat-value">1.8 TB</div>
+        <div class="stat-description">of 5 TB monthly limit</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Uptime</span>
+          <i class="fas fa-clock stat-icon"></i>
+        </div>
+        <div class="stat-value">99.9%</div>
+        <div class="stat-description">Last 30 days</div>
+      </div>
+    </div>
+
+    <div class="search-filter">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search websites...">
+      </div>
+      <div class="filter-options">
+        <select class="filter-select">
+          <option value="">All Status</option>
+          <option value="online">Online</option>
+          <option value="offline">Offline</option>
+          <option value="maintenance">Maintenance</option>
+        </select>
+        <select class="filter-select">
+          <option value="">All Plans</option>
+          <option value="basic">Basic</option>
+          <option value="premium">Premium</option>
+          <option value="business">Business</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="websites-grid">
+      <!-- Website Card 1 -->
+      <div class="website-card">
+        <div class="website-header">
+          <div class="website-title">
+            <span>My Business Site</span>
+            <span class="status-badge status-online">Online</span>
+          </div>
+          <div class="website-domain">mybusiness.com</div>
+        </div>
+        <div class="website-stats">
+          <div class="stat-row">
+            <span class="stat-label">Storage</span>
+            <span>2.4 GB / 10 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 24%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Bandwidth</span>
+            <span>150 GB / 500 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 30%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Plan</span>
+            <span>Premium</span>
+          </div>
+        </div>
+        <div class="website-actions">
+          <button class="btn-primary btn-sm">Manage</button>
+          <button class="btn-secondary btn-sm">Edit</button>
+          <button class="btn-danger btn-sm">Delete</button>
+        </div>
+      </div>
+
+      <!-- Website Card 2 -->
+      <div class="website-card">
+        <div class="website-header">
+          <div class="website-title">
+            <span>E-commerce Store</span>
+            <span class="status-badge status-online">Online</span>
+          </div>
+          <div class="website-domain">myshop.store</div>
+        </div>
+        <div class="website-stats">
+          <div class="stat-row">
+            <span class="stat-label">Storage</span>
+            <span>8.7 GB / 20 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 43%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Bandwidth</span>
+            <span>780 GB / 1 TB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 78%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Plan</span>
+            <span>Business</span>
+          </div>
+        </div>
+        <div class="website-actions">
+          <button class="btn-primary btn-sm">Manage</button>
+          <button class="btn-secondary btn-sm">Edit</button>
+          <button class="btn-danger btn-sm">Delete</button>
+        </div>
+      </div>
+
+      <!-- Website Card 3 -->
+      <div class="website-card">
+        <div class="website-header">
+          <div class="website-title">
+            <span>Personal Blog</span>
+            <span class="status-badge status-maintenance">Maintenance</span>
+          </div>
+          <div class="website-domain">myblog.net</div>
+        </div>
+        <div class="website-stats">
+          <div class="stat-row">
+            <span class="stat-label">Storage</span>
+            <span>0.8 GB / 5 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 16%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Bandwidth</span>
+            <span>45 GB / 100 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 45%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Plan</span>
+            <span>Basic</span>
+          </div>
+        </div>
+        <div class="website-actions">
+          <button class="btn-primary btn-sm">Manage</button>
+          <button class="btn-secondary btn-sm">Edit</button>
+          <button class="btn-danger btn-sm">Delete</button>
+        </div>
+      </div>
+
+      <!-- Website Card 4 -->
+      <div class="website-card">
+        <div class="website-header">
+          <div class="website-title">
+            <span>Portfolio Site</span>
+            <span class="status-badge status-online">Online</span>
+          </div>
+          <div class="website-domain">myportfolio.design</div>
+        </div>
+        <div class="website-stats">
+          <div class="stat-row">
+            <span class="stat-label">Storage</span>
+            <span>3.2 GB / 10 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 32%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Bandwidth</span>
+            <span>120 GB / 500 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 24%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Plan</span>
+            <span>Premium</span>
+          </div>
+        </div>
+        <div class="website-actions">
+          <button class="btn-primary btn-sm">Manage</button>
+          <button class="btn-secondary btn-sm">Edit</button>
+          <button class="btn-danger btn-sm">Delete</button>
+        </div>
+      </div>
+
+      <!-- Website Card 5 -->
+      <div class="website-card">
+        <div class="website-header">
+          <div class="website-title">
+            <span>Test Project</span>
+            <span class="status-badge status-offline">Offline</span>
+          </div>
+          <div class="website-domain">test-project.dev</div>
+        </div>
+        <div class="website-stats">
+          <div class="stat-row">
+            <span class="stat-label">Storage</span>
+            <span>0.3 GB / 5 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 6%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Bandwidth</span>
+            <span>2 GB / 100 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 2%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Plan</span>
+            <span>Basic</span>
+          </div>
+        </div>
+        <div class="website-actions">
+          <button class="btn-primary btn-sm">Manage</button>
+          <button class="btn-secondary btn-sm">Edit</button>
+          <button class="btn-danger btn-sm">Delete</button>
+        </div>
+      </div>
+
+      <!-- Website Card 6 -->
+      <div class="website-card">
+        <div class="website-header">
+          <div class="website-title">
+            <span>Client Project</span>
+            <span class="status-badge status-online">Online</span>
+          </div>
+          <div class="website-domain">client-project.com</div>
+        </div>
+        <div class="website-stats">
+          <div class="stat-row">
+            <span class="stat-label">Storage</span>
+            <span>5.7 GB / 20 GB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 28%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Bandwidth</span>
+            <span>350 GB / 1 TB</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 35%"></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Plan</span>
+            <span>Business</span>
+          </div>
+        </div>
+        <div class="website-actions">
+          <button class="btn-primary btn-sm">Manage</button>
+          <button class="btn-secondary btn-sm">Edit</button>
+          <button class="btn-danger btn-sm">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dark mode toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const icon = themeToggle.querySelector('i');
+
+    // Check for saved theme preference or use preferred color scheme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-mode');
+      icon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      
+      if (body.classList.contains('dark-mode')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  </script>
 </body>
 </html>
