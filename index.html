@@ -944,6 +944,9 @@
 
     // Initialize UI
     updateWebsiteCards();
+    
+    // Attach event listeners to buttons
+    attachEventListeners();
 
     // Edit button functionality
     websiteCards.forEach((card, index) => {
@@ -996,7 +999,7 @@
         localStorage.setItem('hostmaster-websites', JSON.stringify(websites));
         
         // Update UI
-        updateWebsiteCards();
+        updateWebsitesDisplay();
         
         closeModal();
       }
@@ -1107,12 +1110,124 @@
         // Save to localStorage
         localStorage.setItem('hostmaster-websites', JSON.stringify(websites));
         
-        // Reload page to update UI
-        window.location.reload();
+        // Update the UI without reloading
+        updateWebsitesDisplay();
       }
       
       closeModal();
     });
+
+    // Function to update the websites display after changes
+    function updateWebsitesDisplay() {
+      const websitesGrid = document.querySelector('.websites-grid');
+      
+      // Clear existing cards
+      websitesGrid.innerHTML = '';
+      
+      // Create new cards for each website
+      websites.forEach(website => {
+        // Calculate percentages
+        const storagePercent = (website.storage.used / website.storage.total) * 100;
+        const bandwidthPercent = (website.bandwidth.used / website.bandwidth.total) * 100;
+        
+        // Format bandwidth display
+        const bandwidthDisplay = website.bandwidth.displayUnit 
+          ? `${website.bandwidth.used} ${website.bandwidth.unit} / 1 ${website.bandwidth.displayUnit}`
+          : `${website.bandwidth.used} ${website.bandwidth.unit} / ${website.bandwidth.total} ${website.bandwidth.unit}`;
+        
+        // Create card HTML
+        const card = document.createElement('div');
+        card.className = 'website-card';
+        card.innerHTML = `
+          <div class="website-header">
+            <div class="website-title">
+              <span>${website.name}</span>
+              <span class="status-badge status-${website.status}">${website.status.charAt(0).toUpperCase() + website.status.slice(1)}</span>
+            </div>
+            <div class="website-domain">${website.domain}</div>
+          </div>
+          <div class="website-stats">
+            <div class="stat-row">
+              <span class="stat-label">Storage</span>
+              <span>${website.storage.used} ${website.storage.unit} / ${website.storage.total} ${website.storage.unit}</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${storagePercent}%"></div>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Bandwidth</span>
+              <span>${bandwidthDisplay}</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${bandwidthPercent}%"></div>
+            </div>
+          </div>
+          <div class="website-actions">
+            <button class="btn-primary btn-sm">Manage</button>
+            <button class="btn-secondary btn-sm">Edit</button>
+            <button class="btn-danger btn-sm">Delete</button>
+          </div>
+        `;
+        
+        // Add to grid
+        websitesGrid.appendChild(card);
+      });
+      
+      // Update total websites count in stats
+      document.querySelector('.stat-card:first-child .stat-value').textContent = websites.length;
+      
+      // Reattach event listeners to new buttons
+      attachEventListeners();
+    }
+    
+    // Function to attach event listeners to buttons
+    function attachEventListeners() {
+      const newWebsiteCards = document.querySelectorAll('.website-card');
+      
+      newWebsiteCards.forEach((card, index) => {
+        // Manage button
+        const manageBtn = card.querySelector('.btn-primary');
+        manageBtn.addEventListener('click', () => {
+          const website = websites[index];
+          
+          // Update manage modal with website details
+          manageWebsiteName.textContent = website.name;
+          manageWebsiteDomain.textContent = website.domain;
+          
+          // Set status with appropriate styling
+          manageWebsiteStatus.textContent = website.status.charAt(0).toUpperCase() + website.status.slice(1);
+          manageWebsiteStatus.className = '';
+          manageWebsiteStatus.classList.add(`status-${website.status}`);
+          
+          // Show manage modal
+          manageModal.style.display = 'flex';
+        });
+        
+        // Edit button
+        const editBtn = card.querySelector('.btn-secondary');
+        editBtn.addEventListener('click', () => {
+          const website = websites[index];
+          websiteIdInput.value = website.id;
+          websiteNameInput.value = website.name;
+          websiteDomainInput.value = website.domain;
+          websiteStatusInput.value = website.status;
+          editModal.style.display = 'flex';
+        });
+        
+        // Delete button
+        const deleteBtn = card.querySelector('.btn-danger');
+        deleteBtn.addEventListener('click', () => {
+          const website = websites[index];
+          websiteToDelete = website;
+          
+          // Update delete modal with website name
+          deleteWebsiteName.textContent = website.name;
+          
+          // Show delete modal
+          deleteModal.style.display = 'flex';
+        });
+      });
+    }
   </script>
 </body>
 </html>
